@@ -1,0 +1,92 @@
+
+input_file = '../Base/alterations/data03.csv'
+
+df = pd.read_csv(input_file,    # Nome do arquivo com dados
+                     sep=","
+                     ) # Nome das colunas 
+                  
+    # ShowInformationDataFrame(df,"Dataframe original")
+
+   #----------------------------------------------------------------  
+dfAlter = df.copy()
+dfAlter['Target'] = dfAlter.apply(alteraTarget, axis=1)
+
+
+
+    
+    
+
+def estilo_tabela(val):
+    return 'text-align: center;'
+
+def plot_histograma(column,bins):
+    # Cria um histograma
+    plt.figure(10,6)
+    plt.subplots_adjust(wspace=0.3)
+    
+    # Histogram of absolute frequencies
+    plt.subplot(1, 2, 1)
+    n, bins, patches = plt.hist(dfAlter[column], bins=bins, edgecolor='black', color='skyblue')
+    plt.title(f'Histograma de Frequência Absoluta: {column}', fontsize=15)
+    plt.xlabel(column, fontsize=12)
+    plt.ylabel('Frequência Absoluta', fontsize=12)
+    plt.grid(axis='y', alpha=0.9)
+
+    # Histogram of relative frequencies
+    plt.subplot(1, 2, 2)
+    weights = (np.ones_like(dfAlter[column]) / len(dfAlter[column])) * 100  # Weights to convert counts to percentages
+    n, bins, patches = plt.hist(dfAlter[column], bins=bins, weights=weights, edgecolor='black', color='coral')
+    plt.title(f'Histograma de Frequência Relativa: {column}', fontsize=15)
+    plt.xlabel(column, fontsize=12)
+    plt.ylabel('Frequência Relativa (%)', fontsize=12)
+    plt.grid(axis='y', alpha=0.9)
+
+    # Display the plot
+    plt.tight_layout()
+    plt.show()
+
+def describe(name_column, bins_lenght):
+    if name_column == 'Previous qualification (grade)':
+        #min = 0, max = 200
+        #numero de classes = 10
+        bins_lenght = 10
+        amplitude = math.ceil((200)/bins_lenght)
+        print(f'Amplitude: {amplitude}')
+        max_limits = [1 + amplitude * i for i in range(1,bins_lenght+1)]
+        min_limits = [amplitude * i for i in range(0,bins_lenght)]
+        print(f'Limites Inferiores: {min_limits}')
+        print(f'Limites Superiores: {max_limits}')
+        
+        dfAlter['class Previous qualification (grade)'] = pd.cut(dfAlter['Previous qualification (grade)'], 
+                                                                 bins=bins_lenght, 
+                                                                 labels=[f'[{min_limits[i]}-{max_limits[i]})' 
+                                                                for i in range(bins_lenght)])
+        class_summary = dfAlter['class Previous qualification (grade)'].value_counts().sort_index().rename('frequency').to_frame()
+
+        # print(df['clock_speed_class'])
+         # criar tabela visual com matplot com seguintes colunas: classe/rotulo, limite inferior, limite superior, frequencia absoluta, frequencia relativa, frequencia acumulada
+    # Assuming df['ram_class'] is already created
+    
+    class_summary['lower_limit'] = min_limits
+    class_summary['upper_limit'] = max_limits
+    class_summary['relative_frequency'] = (class_summary['frequency'] / class_summary['frequency'].sum())*100
+    class_summary['cumulative_frequency'] = class_summary['frequency'].cumsum()
+    class_summary['cumulative_frequency_percentage'] = (class_summary['cumulative_frequency'] / class_summary['frequency'].sum())*100
+    # print(class_summary.head(15))
+    
+    # Styling
+    # styled_df = class_summary.style.applymap(estilo_tabela) \
+    #                                 .set_properties(**{'width': '100px'}) \
+    #                                 .set_table_styles([{'selector': '', 'props': [('border', '1px solid black')]}])
+    # display(class_summary)
+    plot_histograma('class Previous qualification (grade)', bins_lenght)
+
+
+ # columns = ['ram', 'int_memory', 'battery_power', 'n_cores', 'clock_speed']    
+    columns = ['Previous qualification (grade)']
+    bins = [10]
+
+   
+
+    describe(columns[0], bins[0])
+        
