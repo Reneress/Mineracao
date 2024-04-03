@@ -43,11 +43,16 @@ def main():
 #---------------------------------------------------------------
 
    
-    Gender = df['Gender'].value_counts()
-    Gender.plot(kind='barh', color = ['red', 'blue'])
-    plt.xlabel('Quantidade de alunos')
-    plt.ylabel('0 = Feminino, 1 = Masculino')
-    plt.title('Gênero')
+    Graduate = df[df['Target'] == "Graduate"]['Curricular units 2nd sem (grade)']
+    Enrolled = df[df['Target'] == "Enrolled"]['Curricular units 2nd sem (grade)']
+    Dropout = df[df['Target'] == "Dropout"]['Curricular units 2nd sem (grade)']
+    plt.figure(figsize=(10, 6))
+
+    plt.hist([Graduate, Enrolled, Dropout], bins=5, color=['green', 'blue', 'red'], label=['Formado', 'Matriculado', 'Desistente'])
+    plt.xlabel('Nota Segundo Semestre')
+    plt.ylabel('Quantidade')
+    plt.title('Notas Segundo Semestre x Target')
+    plt.legend()
     plt.show()
 
     Bolsista = df['Scholarship holder'].value_counts()
@@ -56,7 +61,7 @@ def main():
     plt.xlabel('Quantidade de alunos')
     plt.ylabel('0 = Não Bolsista, 1 = Bolsista')
     plt.title('Bolsista')
-    plt.show()
+    #plt.show()
     
     Bolsista = df['Educational special needs'].value_counts()
     # Bolsista.plot(kind='barh', color = ['red', 'Green'])
@@ -64,7 +69,7 @@ def main():
     plt.xlabel('Quantidade de alunos')
     plt.ylabel('1 = Com necessidade especiais, 0 = Sem necessidades especiais')
     plt.title('Educação especial')
-    plt.show()
+    #plt.show()
 
     Target = dfAlter['Target'].value_counts()
 
@@ -73,7 +78,7 @@ def main():
     plt.xlabel('Quantidade de alunos')
     plt.ylabel('Classificação')
     plt.title('Target')
-    plt.show()
+    #plt.show()
 # Exibição do g
     
     
