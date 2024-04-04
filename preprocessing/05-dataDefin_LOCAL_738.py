@@ -41,37 +41,20 @@ def main():
    
     # ShowInformationDataFrame(dfAlter,"Dataframe alterado")
 #---------------------------------------------------------------
-    #Função para grafico em pizza somando parcelas e fazendo %
-    contagem_ocupacao_rotulos = df.groupby(['Target', "Scholarship holder"]).size().unstack(fill_value=0)
 
-    plt.figure(figsize=(12, 8))
-    for index, Target in enumerate(contagem_ocupacao_rotulos.index):
-        plt.subplot(2, 2, index+1)
-        plt.pie(contagem_ocupacao_rotulos.loc[Target], labels=contagem_ocupacao_rotulos.columns, autopct='%1.1f%%', startangle=140)
-        plt.title(f'Relação de bolsistas x {Target}')
-        plt.axis('equal')
-        
-    plt.tight_layout()
+   
+    Gender = df['Gender'].value_counts()
+    Gender.plot(kind='barh', color = ['red', 'blue'])
+    plt.xlabel('Quantidade de alunos')
+    plt.ylabel('0 = Feminino, 1 = Masculino')
+    plt.title('Gênero')
     plt.show()
-
-    #Função para grafico em barra com as 3 componentes
-    """Graduate = df[df['Target'] == "Graduate"]['Curricular units 2nd sem (grade)']
-    Enrolled = df[df['Target'] == "Enrolled"]['Curricular units 2nd sem (grade)']
-    Dropout = df[df['Target'] == "Dropout"]['Curricular units 2nd sem (grade)']
-    plt.figure(figsize=(10, 6))
-
-    plt.hist([Graduate, Enrolled, Dropout], bins=5, color=['green', 'blue', 'red'], label=['Formado', 'Matriculado', 'Desistente'])
-    plt.xlabel('Nota Segundo Semestre')
-    plt.ylabel('Quantidade')
-    plt.title('Notas Segundo Semestre x Target')
-    plt.legend()
-    plt.show()"""
 
     Bolsista = df['Scholarship holder'].value_counts()
     # Bolsista.plot(kind='barh', color = ['red', 'Green'])
     Bolsista.plot(kind='pie', autopct='%1.2f%%')
-    plt.xlabel('0 = Não Bolsista, 1 = Bolsista')
-    plt.ylabel('Quantidade de alunos')
+    plt.xlabel('Quantidade de alunos')
+    plt.ylabel('0 = Não Bolsista, 1 = Bolsista')
     plt.title('Bolsista')
     plt.show()
     
@@ -81,9 +64,8 @@ def main():
     plt.xlabel('Quantidade de alunos')
     plt.ylabel('1 = Com necessidade especiais, 0 = Sem necessidades especiais')
     plt.title('Educação especial')
-    #plt.show()
+    plt.show()
 
-<<<<<<< HEAD
     # Target = dfAlter['Target'].value_counts()
     sns.countplot(x='Target', data=df, hue='Target', palette='Spectral')
     plt.show()
@@ -101,16 +83,6 @@ def main():
     plt.show()
 
     
-=======
-    Target = dfAlter['Target'].value_counts()
-
-    plt.figure(figsize=(6,6))
-    plt.pie(Target, labels = Target.index, colors = ['red', 'green', 'blue'], autopct='%1.1f%%')
-    plt.xlabel('Quantidade de alunos')
-    plt.ylabel('Classificação')
-    plt.title('Target')
-    #plt.show()
->>>>>>> 13fde23c21c819e256efd10e4486b00b00c2e1cf
 # Exibição do g
     
     
