@@ -66,14 +66,23 @@ def main():
     plt.title('Educação especial')
     plt.show()
 
-    Target = dfAlter['Target'].value_counts()
-
-    plt.figure(figsize=(6,6))
-    plt.pie(Target, labels = Target.index, colors = ['red', 'green', 'blue'], autopct='%1.1f%%')
-    plt.xlabel('Quantidade de alunos')
-    plt.ylabel('Classificação')
-    plt.title('Target')
+    # Target = dfAlter['Target'].value_counts()
+    sns.countplot(x='Target', data=df, hue='Target', palette='Spectral')
     plt.show()
+    
+    sns.countplot(x='Age at enrollment', data=df)
+    plt.show()
+    
+    
+    plt.figure(figsize=(8, 6))
+    sns.boxplot(x=df['Age at enrollment'], color='skyblue')
+    plt.title('Distribuição da Idade')
+    plt.xlabel('Idade')
+    plt.ylabel('Valores')
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.show()
+
+    
 # Exibição do g
     
     
@@ -96,18 +105,20 @@ def main():
     #     g.plot_marginals(sns.histplot, color="#52796f", alpha=1, bins=20)
     #     plt.show()
         
-    # df_categorical = df[['Marital status','Application mode','Application order','Course','Daytime/evening attendance	','Previous qualification',
-    #             'Previous qualification (grade)','Nacionality',"Mother's qualification","Father's qualification","Mother's occupation",
-    #             "Father's occupation",'Admission grade','Displaced','Educational special needs','Debtor','Tuition fees up to date',
-    #             'Gender','Scholarship holder','Age at enrollment','International','Curricular units 1st sem (credited)',
-    #             'Curricular units 1st sem (enrolled)','Curricular units 1st sem (evaluations)','Curricular units 1st sem (approved)',
-    #             'Curricular units 1st sem (grade)','Curricular units 1st sem (without evaluations)','Curricular units 2nd sem (credited)',
-    #             'Curricular units 2nd sem (enrolled)','Curricular units 2nd sem (evaluations)','Curricular units 2nd sem (approved)',
-    #             'Curricular units 2nd sem (grade)','Curricular units 2nd sem (without evaluations)','Unemployment rate','Inflation rate','GDP']].astype(str)
+    df_categorical = df[['Marital status','Application mode','Application order','Course','Daytime/evening attendance	','Previous qualification',
+                'Previous qualification (grade)','Nacionality',"Mother's qualification","Father's qualification","Mother's occupation",
+                "Father's occupation",'Admission grade','Displaced','Educational special needs','Debtor','Tuition fees up to date',
+                'Gender','Scholarship holder','Age at enrollment','International','Curricular units 1st sem (credited)',
+                'Curricular units 1st sem (enrolled)','Curricular units 1st sem (evaluations)','Curricular units 1st sem (approved)',
+                'Curricular units 1st sem (grade)','Curricular units 1st sem (without evaluations)','Curricular units 2nd sem (credited)',
+                'Curricular units 2nd sem (enrolled)','Curricular units 2nd sem (evaluations)','Curricular units 2nd sem (approved)',
+                'Curricular units 2nd sem (grade)','Curricular units 2nd sem (without evaluations)','Unemployment rate','Inflation rate','GDP']].astype(str)
 
 # todas as colunas só para comparar com as categoricas que vou dropar
 
-
+    # df_categorical=df[['Tuition fees up to date','Curricular units 1st sem (approved)','Curricular units 1st sem (grade)',
+    #           'Curricular units 2nd sem (approved)','Curricular units 2nd sem (grade)']].astype(str)
+    
     # df_numerical = df.drop(df_categorical.columns, axis=1)
 
     # fig=plt.figure(figsize=(30,18))
@@ -115,7 +126,8 @@ def main():
     #     if i==15:
     #         break
     #     ax=fig.add_subplot(5, 3,(i+1))
-    #     sns.scatterplot(x='ram',y=col,hue='Target',data=dfAlter,palette="tab10")
+    #     sns.scatterplot(x='GDP',y=col,hue='Target',data=dfAlter,palette="tab10")
+    #     plt.show()
         
 def ShowInformationDataFrame(df, message=""):
     print(message+"\n")

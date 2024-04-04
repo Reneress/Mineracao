@@ -9,7 +9,7 @@ import seaborn as sns
 def alteraTarget(row):
     if row['Target'] == "Graduate":
         return 2
-    elif row['Target'] == "Enroled":
+    elif row['Target'] == "Enrolled":
         return 1
     else:
         return -1

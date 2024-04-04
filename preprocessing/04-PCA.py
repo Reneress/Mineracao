@@ -43,13 +43,13 @@ def main():
     # normalizedDf = pd.concat([normalizedDf, df[[target]]], axis = 1)
     # ShowInformationDataFrame(normalizedDf,"Dataframe Normalized")
 
-    # # Z-score normalization
+    # Z-score normalization
     # x = StandardScaler().fit_transform(x)
     # normalizedDf = pd.DataFrame(data = x, columns = features)
     # normalizedDf = pd.concat([normalizedDf, df[[target]]], axis = 1)
     # ShowInformationDataFrame(normalizedDf,"Dataframe Z-Score Normalized")
     
-    #  # Mix-Max normalization
+     # Mix-Max normalization
     x = MinMaxScaler().fit_transform(x)
     normalizedDf = pd.DataFrame(data = x, columns = features)
     normalizedDf = pd.concat([normalizedDf, df[[target]]], axis = 1)

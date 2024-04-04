@@ -72,14 +72,22 @@ def main():
     normalized3Df = pd.concat([normalized3Df, dfAlter[[target]]], axis = 1)
     ShowInformationDataFrame(normalized3Df,"Dataframe Min-Max Normalized")
     print(normalized3Df.columns.values.tolist())
+    
+    #z-score Normalization dfAlter
+    
+    x_zcore = StandardScaler().fit_transform(xAlter)
+    normalized4Df = pd.DataFrame(data = x_zcore, columns = features)
+    normalized4Df = pd.concat([normalized4Df, dfAlter[[target]]], axis = 1)
+    ShowInformationDataFrame(normalized4Df,"Dataframe Z-Score Normalized")
+    print(normalized4Df.columns.values.tolist())
      
-    # plt.figure(figsize=(20,12))
-    # sns.heatmap(normalized3Df.corr(), annot=True, cmap='coolwarm', fmt='.2f', linewidths=2)
-    # plt.title('Correlation matrix')
-    # plt.show()
+    plt.figure(figsize=(20,12))
+    sns.heatmap(normalized4Df.corr(), cmap='coolwarm', fmt='.2f', linewidths=2)
+    plt.title('Correlation matrix')
+    plt.show()
     # #Plotando a matriz de correlação com a coluna target alterada
     
-    # # PCA projection
+    # PCA projection
     # warnings.filterwarnings("ignore")
     # cols1 = ['Marital status','Application mode','Application order','Course','Daytime/evening attendance	','Previous qualification',
     #             'Previous qualification (grade)','Nacionality',"Mother's qualification","Father's qualification","Mother's occupation",
@@ -95,11 +103,11 @@ def main():
     #     print(f"\n{dfAlter[col].value_counts()}")
     #     print('_'*25)
         
-    # # plotando gráfico de características relacionando com Target
-    # plt.figure (figsize = (12 , 10) , dpi = 100)
-    # heatmap = sns.heatmap (dfAlter.corr()[['Target']].sort_values (by = 'Target', ascending = False), vmin = -1, vmax = 1, annot = True, cmap = 'GnBu')
-    # heatmap.set_title ('Features Correlating with Target', fontdict = {'fontsize':12} , pad = 18)
-    # plt.show()
+    # plotando gráfico de características relacionando com Target
+    plt.figure (figsize = (12 , 10) , dpi = 100)
+    heatmap = sns.heatmap (dfAlter.corr()[['Target']].sort_values (by = 'Target', ascending = False), vmin = -1, vmax = 1, annot = True, cmap = 'GnBu')
+    heatmap.set_title ('Features Correlating with Target', fontdict = {'fontsize':12} , pad = 18)
+    plt.show()
 
 def ShowInformationDataFrame(df, message=""):
     print(message+"\n")
