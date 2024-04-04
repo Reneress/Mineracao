@@ -41,9 +41,21 @@ def main():
    
     # ShowInformationDataFrame(dfAlter,"Dataframe alterado")
 #---------------------------------------------------------------
+    #Função para grafico em pizza somando parcelas e fazendo %
+    contagem_ocupacao_rotulos = df.groupby(['Target', "Scholarship holder"]).size().unstack(fill_value=0)
 
-   
-    Graduate = df[df['Target'] == "Graduate"]['Curricular units 2nd sem (grade)']
+    plt.figure(figsize=(12, 8))
+    for index, Target in enumerate(contagem_ocupacao_rotulos.index):
+        plt.subplot(2, 2, index+1)
+        plt.pie(contagem_ocupacao_rotulos.loc[Target], labels=contagem_ocupacao_rotulos.columns, autopct='%1.1f%%', startangle=140)
+        plt.title(f'Relação de bolsistas x {Target}')
+        plt.axis('equal')
+        
+    plt.tight_layout()
+    plt.show()
+
+    #Função para grafico em barra com as 3 componentes
+    """Graduate = df[df['Target'] == "Graduate"]['Curricular units 2nd sem (grade)']
     Enrolled = df[df['Target'] == "Enrolled"]['Curricular units 2nd sem (grade)']
     Dropout = df[df['Target'] == "Dropout"]['Curricular units 2nd sem (grade)']
     plt.figure(figsize=(10, 6))
@@ -53,15 +65,15 @@ def main():
     plt.ylabel('Quantidade')
     plt.title('Notas Segundo Semestre x Target')
     plt.legend()
-    plt.show()
+    plt.show()"""
 
     Bolsista = df['Scholarship holder'].value_counts()
     # Bolsista.plot(kind='barh', color = ['red', 'Green'])
     Bolsista.plot(kind='pie', autopct='%1.2f%%')
-    plt.xlabel('Quantidade de alunos')
-    plt.ylabel('0 = Não Bolsista, 1 = Bolsista')
+    plt.xlabel('0 = Não Bolsista, 1 = Bolsista')
+    plt.ylabel('Quantidade de alunos')
     plt.title('Bolsista')
-    #plt.show()
+    plt.show()
     
     Bolsista = df['Educational special needs'].value_counts()
     # Bolsista.plot(kind='barh', color = ['red', 'Green'])
